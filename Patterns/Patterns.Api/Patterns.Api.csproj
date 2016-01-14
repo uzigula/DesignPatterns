@@ -117,6 +117,7 @@
     <Compile Include="Handlers\GetEmployeeCommandHandler.cs" />
     <Compile Include="Handlers\SaveEmployeeCommandHandler.cs" />
     <Compile Include="Handlers\UpdateEmployeeCommandHandler.cs" />
+    <Compile Include="HttpHandlers\CustomExceptionHandler.cs" />
     <Compile Include="Impl\MemoryDataProvider.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Employee.cs" />

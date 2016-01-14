@@ -21,84 +21,31 @@ namespace Patterns.Api.Controllers
         [Route("")]
         public IHttpActionResult Get()
         {
-            try
-            {
-                var list = new GetAllEmployeesCommandHandler(employeesProvider).Handle(new GetAllEmployeesCommand());
-                return Ok(list);
-            }
-            catch (InstanceNotFoundException e)
-            {
-                return NotFound();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            var list = new GetAllEmployeesCommandHandler(employeesProvider).Handle(new GetAllEmployeesCommand());
+            return Ok(list);
         }
 
         [Route("{id:int}")]
         public IHttpActionResult Get(int id)
         {
-            try
-            {
-                var employee = new GetEmployeeCommandHandler(employeesProvider).Handle(new GetEmployeeCommand(id));
-                return Ok(employee);
-
-            }
-            catch (InstanceNotFoundException e)
-            {
-                return NotFound();
-            }
-
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            var employee = new GetEmployeeCommandHandler(employeesProvider).Handle(new GetEmployeeCommand(id));
+            return Ok(employee);
         }
 
 
         [Route("")]
         public IHttpActionResult Post(Employee newEmployee)
         {
-            try
-            {
-                new SaveEmployeeCommandHandler(employeesProvider).Handle(new SaveEmployeeCommand(newEmployee));
-                return Ok();
-
-            }
-            catch (InvalidDataException e)
-            {
-
-                return BadRequest(e.Message);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            new SaveEmployeeCommandHandler(employeesProvider).Handle(new SaveEmployeeCommand(newEmployee));
+            return Ok();
         }
 
 
         [Route("{id:int}")]
         public IHttpActionResult Put(int id, Employee employee)
         {
-            try
-            {
-                new UpdateEmployeeCommandHandler(employeesProvider).Handle(new UpdateEmployeeCommand(id, employee));
-
-                return Ok();
-            }
-            catch (InstanceNotFoundException ex)
-            {
-                return NotFound();
-            }
-            catch (InvalidDataException e)
-            {
-                return BadRequest(e.Message);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            new UpdateEmployeeCommandHandler(employeesProvider).Handle(new UpdateEmployeeCommand(id, employee));
+            return Ok();
 
         }
 

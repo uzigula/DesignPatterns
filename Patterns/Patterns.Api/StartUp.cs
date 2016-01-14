@@ -1,7 +1,9 @@
 ﻿using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using Microsoft.Owin.Cors;
 using Owin;
 using Patterns.Api.CompositionRoot;
+using Patterns.Api.HttpHandlers;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 
@@ -22,6 +24,7 @@ namespace Patterns.Api
             SimpleInjectorConfiguration.ConfigureRemarks(container);
             SimpleInjectorConfiguration.ConfigureGenerics(container);
 
+            config.Services.Replace(typeof(IExceptionHandler), new CustomExceptionHandler());
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
 
