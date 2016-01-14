@@ -21,6 +21,7 @@ namespace Patterns.Api
 
             SimpleInjectorConfiguration.ConfigureWebApp(config, container);
             SimpleInjectorConfiguration.ConfigureRemarks(container);
+            SimpleInjectorConfiguration.ConfigureGenerics(container);
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
 

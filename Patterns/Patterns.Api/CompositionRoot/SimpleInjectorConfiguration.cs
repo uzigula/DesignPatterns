@@ -36,5 +36,12 @@ namespace Patterns.Api.CompositionRoot
 
 
         }
+
+        public static void ConfigureGenerics(Container container)
+        {
+            container.Register(typeof(DataProvider<>), new[] { typeof(DataProvider<>).Assembly });
+
+            
+        }
     }
 }
