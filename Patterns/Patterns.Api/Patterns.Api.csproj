@@ -99,13 +99,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\GetAllEmployeesCommand.cs" />
+    <Compile Include="Commands\GetEmployeeCommand.cs" />
+    <Compile Include="Commands\SaveEmployeeCommand.cs" />
+    <Compile Include="Commands\UpdateEmployeeCommand.cs" />
     <Compile Include="CompositionRoot\SimpleInjectorConfiguration.cs" />
     <Compile Include="CompositionRoot\SimpleInjectorOwinExtensions.cs" />
+    <Compile Include="Contracts\Command.cs" />
+    <Compile Include="Contracts\CommandHandler.cs" />
     <Compile Include="Contracts\DataProvider.cs" />
     <Compile Include="Contracts\Remark.cs" />
+    <Compile Include="Contracts\Unit.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Handlers\GetAllEmployeesCommandHandler.cs" />
+    <Compile Include="Handlers\GetEmployeeCommandHandler.cs" />
+    <Compile Include="Handlers\SaveEmployeeCommandHandler.cs" />
+    <Compile Include="Handlers\UpdateEmployeeCommandHandler.cs" />
     <Compile Include="Impl\MemoryDataProvider.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Employee.cs" />

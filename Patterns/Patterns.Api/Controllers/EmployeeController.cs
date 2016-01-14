@@ -1,6 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Management.Instrumentation;
 using System.Web.Http;
+using Patterns.Api.Commands;
 using Patterns.Api.Contracts;
+using Patterns.Api.Handlers;
 using Patterns.Api.Models;
 
 namespace Patterns.Api.Controllers
@@ -17,46 +21,85 @@ namespace Patterns.Api.Controllers
         [Route("")]
         public IHttpActionResult Get()
         {
-            var list = employeesProvider.GetAll();
-            if (list.IsNullOrEmpty()) return NotFound(); 
-            return Ok(list);
-
+            try
+            {
+                var list = new GetAllEmployeesCommandHandler(employeesProvider).Handle(new GetAllEmployeesCommand());
+                return Ok(list);
+            }
+            catch (InstanceNotFoundException e)
+            {
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         [Route("{id:int}")]
         public IHttpActionResult Get(int id)
         {
-            var employee = employeesProvider.Get(id);
-            if (employee.IsNull()) return NotFound();
-            return Ok(employee);
+            try
+            {
+                var employee = new GetEmployeeCommandHandler(employeesProvider).Handle(new GetEmployeeCommand(id));
+                return Ok(employee);
 
+            }
+            catch (InstanceNotFoundException e)
+            {
+                return NotFound();
+            }
+
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
 
         [Route("")]
         public IHttpActionResult Post(Employee newEmployee)
         {
-            if (newEmployee.Name.IsNullOrEmpty()) return BadRequest("Falto ingresar el Nombre");
-            if (newEmployee.Position.IsNullOrEmpty()) return BadRequest("Falto ingresar el puesto");
-            if (!employeesProvider.Get(newEmployee.Id).IsNull()) return BadRequest("Empleado ya Existe");
+            try
+            {
+                new SaveEmployeeCommandHandler(employeesProvider).Handle(new SaveEmployeeCommand(newEmployee));
+                return Ok();
 
-            employeesProvider.Save(newEmployee);
-            return Ok();
+            }
+            catch (InvalidDataException e)
+            {
+
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
 
         [Route("{id:int}")]
         public IHttpActionResult Put(int id, Employee employee)
         {
-            if (employee.Name.IsNullOrEmpty()) return BadRequest("Falto ingresar el Nombre");
-            if (employee.Position.IsNullOrEmpty()) return BadRequest("Falto ingresar el puesto");
+            try
+            {
+                new UpdateEmployeeCommandHandler(employeesProvider).Handle(new UpdateEmployeeCommand(id, employee));
 
-            var employeeOld = employeesProvider.Get(id);
-            if (employeeOld.IsNull()) return NotFound();
+                return Ok();
+            }
+            catch (InstanceNotFoundException ex)
+            {
+                return NotFound();
+            }
+            catch (InvalidDataException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
-            employee.Id = id;
-            employeesProvider.Update(employee);
-            return Ok();
         }
 
 
