@@ -2,7 +2,7 @@
 using Patterns.Api.Contracts;
 using Patterns.Api.Models;
 
-namespace Patterns.Api.Commands
+namespace Patterns.Api.Requests.Queries
 {
     public class GetAllEmployeesCommand : Command<List<Employee>>
     {

@@ -1,6 +1,5 @@
-﻿using System.IO;
-using FluentValidation;
-using Patterns.Api.Commands;
+﻿using FluentValidation;
+using Patterns.Api.Requests.Commands;
 
 namespace Patterns.Api.Validators
 {
