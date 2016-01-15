@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using Patterns.Api.Contracts;
 using Patterns.Api.RulesImpl;
 using SimpleInjector;
+using SimpleInjector.Extensions;
 
 namespace Patterns.Api.CompositionRoot
 {
@@ -22,7 +23,7 @@ namespace Patterns.Api.CompositionRoot
 
         public static void ConfigureRemarks(Container container)
         {
-            
+
             var assembly = typeof(ClaimedRemark).Assembly;
 
             var types = from type in assembly.GetTypes()
@@ -39,9 +40,20 @@ namespace Patterns.Api.CompositionRoot
 
         public static void ConfigureGenerics(Container container)
         {
-            container.Register(typeof(DataProvider<>), new[] { typeof(DataProvider<>).Assembly });
+            container.Register(typeof(DataProvider<>), new[] { typeof(DataProvider<>).Assembly }, Lifestyle.Singleton);
+            container.Register(typeof(CommandHandler<,>), new[] { typeof(CommandHandler<,>).Assembly });
+            container.Register(typeof(CommandHandler<>), new[] { typeof(CommandHandler<>).Assembly });
 
-            
+            var commandHandlerTypes = container.GetTypesToRegister(typeof(Command<>),
+                new[] { typeof(Command<>).Assembly },
+                    new TypesToRegisterOptions { IncludeGenericTypeDefinitions = true} );
+
+            foreach (Type type in commandHandlerTypes.Where(t => t.IsGenericTypeDefinition))
+            {
+                container.RegisterConditional(typeof(Command<>), type, c => !c.Handled);
+            }
+
+
         }
     }
 }

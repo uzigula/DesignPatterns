@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Management.Instrumentation;
 using System.Web.Http;
@@ -12,23 +13,32 @@ namespace Patterns.Api.Controllers
     [RoutePrefix("Employee")]
     public class EmployeeController : ApiController
     {
-        private readonly DataProvider<Employee> employeesProvider;
+        private readonly CommandHandler<GetAllEmployeesCommand, List<Employee>> getAllCommand;
+        private readonly CommandHandler<GetEmployeeCommand, Employee> getCommand;
+        private readonly CommandHandler<SaveEmployeeCommand> saveCommand;
+        private readonly CommandHandler<UpdateEmployeeCommand> updateCommand;
 
-        public EmployeeController(DataProvider<Employee> provider)
+        public EmployeeController(CommandHandler<GetAllEmployeesCommand,List<Employee>> getAllCommand,
+                                  CommandHandler<GetEmployeeCommand, Employee> getCommand,
+                                  CommandHandler<SaveEmployeeCommand> saveCommand,
+                                  CommandHandler<UpdateEmployeeCommand> updateCommand)
         {
-            this.employeesProvider = provider;
+            this.getAllCommand = getAllCommand;
+            this.getCommand = getCommand;
+            this.saveCommand = saveCommand;
+            this.updateCommand = updateCommand;
         }
         [Route("")]
         public IHttpActionResult Get()
         {
-            var list = new GetAllEmployeesCommandHandler(employeesProvider).Handle(new GetAllEmployeesCommand());
+            var list = getAllCommand.Handle(new GetAllEmployeesCommand());
             return Ok(list);
         }
 
         [Route("{id:int}")]
         public IHttpActionResult Get(int id)
         {
-            var employee = new GetEmployeeCommandHandler(employeesProvider).Handle(new GetEmployeeCommand(id));
+            var employee = getCommand.Handle(new GetEmployeeCommand(id));
             return Ok(employee);
         }
 
@@ -36,7 +46,7 @@ namespace Patterns.Api.Controllers
         [Route("")]
         public IHttpActionResult Post(Employee newEmployee)
         {
-            new SaveEmployeeCommandHandler(employeesProvider).Handle(new SaveEmployeeCommand(newEmployee));
+            saveCommand.Handle(new SaveEmployeeCommand(newEmployee));
             return Ok();
         }
 
@@ -44,7 +54,7 @@ namespace Patterns.Api.Controllers
         [Route("{id:int}")]
         public IHttpActionResult Put(int id, Employee employee)
         {
-            new UpdateEmployeeCommandHandler(employeesProvider).Handle(new UpdateEmployeeCommand(id, employee));
+            updateCommand.Handle(new UpdateEmployeeCommand(id, employee));
             return Ok();
 
         }
