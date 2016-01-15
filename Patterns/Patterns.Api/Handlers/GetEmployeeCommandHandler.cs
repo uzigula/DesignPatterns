@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Management.Instrumentation;
+using Patterns.Api.Commands;
 using Patterns.Api.Contracts;
 using Patterns.Api.Models;
-using Patterns.Api.Requests.Queries;
 
-namespace Patterns.Api.Handlers.Queries
+namespace Patterns.Api.Handlers
 {
     public class GetEmployeeCommandHandler : CommandHandler<GetEmployeeCommand,Employee>
     {

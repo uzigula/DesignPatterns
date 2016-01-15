@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Instrumentation;
-using Patterns.Api.Contracts;
+using Patterns.Api.Commands;
 using Patterns.Api.Models;
-using Patterns.Api.Requests.Queries;
+using Patterns.Api.Contracts;
 
-namespace Patterns.Api.Handlers.Queries
+namespace Patterns.Api.Handlers
 {
     public class GetAllEmployeesCommandHandler : CommandHandler<GetAllEmployeesCommand, List<Employee>>
     {

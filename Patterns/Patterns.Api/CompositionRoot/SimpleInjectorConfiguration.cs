@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Http;
 using FluentValidation;
 using Newtonsoft.Json.Serialization;
@@ -8,6 +10,7 @@ using Patterns.Api.CrossCuttingConcerns;
 using Patterns.Api.RulesImpl;
 using Patterns.Api.Validators;
 using SimpleInjector;
+using SimpleInjector.Extensions;
 
 namespace Patterns.Api.CompositionRoot
 {
@@ -80,7 +83,7 @@ namespace Patterns.Api.CompositionRoot
             
             var requests =
                 from type in repositoryAssembly.GetExportedTypes()
-                where type.Namespace.Contains("Patterns.Api.Requests")
+                where type.Namespace.Contains("Patterns.Api.Commands")
                 select type;
 
             foreach (var request in requests)

@@ -1,7 +1,7 @@
 ﻿using Patterns.Api.Contracts;
 using Patterns.Api.Models;
 
-namespace Patterns.Api.Requests.Commands
+namespace Patterns.Api.Commands
 {
     public class UpdateEmployeeCommand : Command
     {

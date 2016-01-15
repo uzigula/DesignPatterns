@@ -1,7 +1,7 @@
 ﻿using Patterns.Api.Contracts;
 using Patterns.Api.Models;
 
-namespace Patterns.Api.Requests.Queries
+namespace Patterns.Api.Commands
 {
     public class GetEmployeeCommand : Command<Employee>
     {

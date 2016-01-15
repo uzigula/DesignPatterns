@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
+using Patterns.Api.Commands;
 using Patterns.Api.Contracts;
 using Patterns.Api.Models;
-using Patterns.Api.Requests.Commands;
 
-namespace Patterns.Api.Handlers.Commands
+namespace Patterns.Api.Handlers
 {
     public class SaveEmployeeCommandHandler : CommandHandler<SaveEmployeeCommand>
     {
