@@ -68,6 +68,11 @@ namespace Patterns.Api.CompositionRoot
             container.RegisterDecorator(
                 typeof (CommandHandler<,>),
                 typeof (ValidatorHandlerDecorator<,>));
+
+            container.RegisterDecorator(
+                typeof(CommandHandler<,>),
+                typeof(TransactionHandlerDecorator<,>), c => c.ImplementationType.Namespace.Contains("Commands")
+                );
         }
 
         public static void ConfigureValidators(Container container)
