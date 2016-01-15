@@ -23,6 +23,7 @@ namespace Patterns.Api
             SimpleInjectorConfiguration.ConfigureWebApp(config, container);
             SimpleInjectorConfiguration.ConfigureRemarks(container);
             SimpleInjectorConfiguration.ConfigureGenerics(container);
+            SimpleInjectorConfiguration.ConfigureMediator(container);
 
             config.Services.Replace(typeof(IExceptionHandler), new CustomExceptionHandler());
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);

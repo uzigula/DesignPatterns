@@ -55,5 +55,13 @@ namespace Patterns.Api.CompositionRoot
 
 
         }
+
+        public static void ConfigureMediator(Container container)
+        {
+            
+            container.Register<IMediator>(() => new Mediator(container.GetInstance<Resolver>()));
+            container.Register(() => Console.Out);
+            container.Register<Resolver>(() => t => container.GetInstance(t));            
+        }
     }
 }

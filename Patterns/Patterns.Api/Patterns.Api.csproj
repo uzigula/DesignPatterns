@@ -108,6 +108,7 @@
     <Compile Include="Contracts\Command.cs" />
     <Compile Include="Contracts\CommandHandler.cs" />
     <Compile Include="Contracts\DataProvider.cs" />
+    <Compile Include="Contracts\Mediator.cs" />
     <Compile Include="Contracts\Remark.cs" />
     <Compile Include="Contracts\Unit.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
