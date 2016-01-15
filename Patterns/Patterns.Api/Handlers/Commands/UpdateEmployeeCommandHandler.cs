@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Management.Instrumentation;
-using Patterns.Api.Commands;
 using Patterns.Api.Contracts;
 using Patterns.Api.Models;
+using Patterns.Api.Requests.Commands;
 
-namespace Patterns.Api.Handlers
+namespace Patterns.Api.Handlers.Commands
 {
     public class UpdateEmployeeCommandHandler : CommandHandler<UpdateEmployeeCommand>
     {

@@ -1,11 +1,8 @@
 ﻿using System.Web.Http;
-using Patterns.Api.Commands;
 using Patterns.Api.Contracts;
-using Patterns.Api.CrossCuttingConcerns;
-using Patterns.Api.Handlers;
-using Patterns.Api.Impl;
 using Patterns.Api.Models;
-using Patterns.Api.Validators;
+using Patterns.Api.Requests.Commands;
+using Patterns.Api.Requests.Queries;
 
 namespace Patterns.Api.Controllers
 {

@@ -103,10 +103,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\GetAllEmployeesCommand.cs" />
-    <Compile Include="Commands\GetEmployeeCommand.cs" />
-    <Compile Include="Commands\SaveEmployeeCommand.cs" />
-    <Compile Include="Commands\UpdateEmployeeCommand.cs" />
+    <Compile Include="Requests\Queries\GetAllEmployeesCommand.cs" />
+    <Compile Include="Requests\Queries\GetEmployeeCommand.cs" />
+    <Compile Include="Requests\Commands\SaveEmployeeCommand.cs" />
+    <Compile Include="Requests\Commands\UpdateEmployeeCommand.cs" />
     <Compile Include="CompositionRoot\SimpleInjectorConfiguration.cs" />
     <Compile Include="CompositionRoot\SimpleInjectorOwinExtensions.cs" />
     <Compile Include="Contracts\Command.cs" />
@@ -120,10 +120,10 @@
     <Compile Include="CrossCuttingConcerns\ValidatorHandlerDecorator.cs" />
     <Compile Include="Exceptions\CustomValidationException.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Handlers\GetAllEmployeesCommandHandler.cs" />
-    <Compile Include="Handlers\GetEmployeeCommandHandler.cs" />
-    <Compile Include="Handlers\SaveEmployeeCommandHandler.cs" />
-    <Compile Include="Handlers\UpdateEmployeeCommandHandler.cs" />
+    <Compile Include="Handlers\Queries\GetAllEmployeesCommandHandler.cs" />
+    <Compile Include="Handlers\Queries\GetEmployeeCommandHandler.cs" />
+    <Compile Include="Handlers\Commands\SaveEmployeeCommandHandler.cs" />
+    <Compile Include="Handlers\Commands\UpdateEmployeeCommandHandler.cs" />
     <Compile Include="HttpHandlers\CustomExceptionHandler.cs" />
     <Compile Include="Impl\MemoryDataProvider.cs" />
     <Compile Include="Models\Claim.cs" />
