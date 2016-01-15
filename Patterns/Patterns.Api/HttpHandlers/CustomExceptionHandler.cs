@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Results;
+using Patterns.Api.Exceptions;
 
 namespace Patterns.Api.HttpHandlers
 {
@@ -13,7 +14,7 @@ namespace Patterns.Api.HttpHandlers
         public override void Handle(ExceptionHandlerContext context)
         {
 
-            if (context.Exception is InvalidDataException)
+            if (context.Exception is InvalidDataException || context.Exception is CustomValidationException)
                 context.Result = new ResponseMessageResult(context.Request.CreateResponse(HttpStatusCode.BadRequest,
                     new {context.Exception.Message}));
 

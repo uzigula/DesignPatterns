@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Http;
+using FluentValidation;
 using Newtonsoft.Json.Serialization;
 using Patterns.Api.Contracts;
+using Patterns.Api.CrossCuttingConcerns;
 using Patterns.Api.RulesImpl;
+using Patterns.Api.Validators;
 using SimpleInjector;
 using SimpleInjector.Extensions;
 
@@ -40,7 +44,8 @@ namespace Patterns.Api.CompositionRoot
 
         public static void ConfigureGenerics(Container container)
         {
-            container.Register(typeof(DataProvider<>), new[] { typeof(DataProvider<>).Assembly }, Lifestyle.Singleton);
+            container.Register(typeof(DataProvider<>), 
+                new[] { typeof(DataProvider<>).Assembly }, Lifestyle.Singleton);
             container.Register(typeof(CommandHandler<,>), new[] { typeof(CommandHandler<,>).Assembly });
             container.Register(typeof(CommandHandler<>), new[] { typeof(CommandHandler<>).Assembly });
 
@@ -61,7 +66,42 @@ namespace Patterns.Api.CompositionRoot
             
             container.Register<IMediator>(() => new Mediator(container.GetInstance<Resolver>()));
             container.Register(() => Console.Out);
-            container.Register<Resolver>(() => t => container.GetInstance(t));            
+            container.Register<Resolver>(() => t => container.GetInstance(t));
+
+            container.RegisterDecorator(
+                typeof (CommandHandler<,>),
+                typeof (ValidatorHandlerDecorator<,>));
+        }
+
+        public static void ConfigureValidators(Container container)
+        {
+            
+            container.Register(typeof(IValidator<>),
+                new[] { typeof(SaveEmployeeValidator).Assembly });
+
+            var repositoryAssembly = typeof(SaveEmployeeValidator).Assembly;
+            
+            var requests =
+                from type in repositoryAssembly.GetExportedTypes()
+                where type.Namespace.Contains("Patterns.Api.Commands")
+                select type;
+
+            foreach (var request in requests)
+            {
+                var taskTypes = from type in repositoryAssembly.GetTypes()
+                                where typeof(IValidator<>).MakeGenericType(request).IsAssignableFrom(type)
+                                      && !type.IsAbstract && !type.IsGenericTypeDefinition
+                                select type;
+
+                if (!taskTypes.Any()) continue;
+
+                taskTypes.ForEach(type => container.Register(type, type, Lifestyle.Transient));
+
+                // registers a list of all those (singleton) tasks.
+                var handler = typeof(IValidator<>).MakeGenericType(request);
+                container.RegisterCollection(handler, taskTypes);
+            }
+
         }
     }
 }

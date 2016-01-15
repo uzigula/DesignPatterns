@@ -17,9 +17,6 @@ namespace Patterns.Api.Handlers
 
         protected override void HandleCore(SaveEmployeeCommand command)
         {
-
-            if (command.Employee.Name.IsNullOrEmpty()) throw new InvalidDataException( "Falto ingresar el Nombre");
-            if (command.Employee.Position.IsNullOrEmpty()) throw new InvalidDataException("Falto ingresar el puesto");
             if (!employeesProvider.Get(command.Employee.Id).IsNull()) throw new InvalidDataException("Empleado ya Existe");
             employeesProvider.Save(command.Employee);
 

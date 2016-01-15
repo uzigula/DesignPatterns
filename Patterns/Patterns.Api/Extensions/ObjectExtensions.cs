@@ -19,5 +19,13 @@ namespace System
         {
             return (l.IsNull() || !l.Any());
         }
+
+        public static void ForEach<T>(this IEnumerable<T> query, Action<T> method)
+        {
+            foreach (T item in query)
+            {
+                method(item);
+            }
+        }
     }
 }
