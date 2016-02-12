@@ -65,6 +65,7 @@ namespace Patterns.Api.CompositionRoot
             container.Register(() => Console.Out);
             container.Register<Resolver>(() => t => container.GetInstance(t));
 
+
             container.RegisterDecorator(
                 typeof (CommandHandler<,>),
                 typeof (ValidatorHandlerDecorator<,>));
@@ -73,6 +74,13 @@ namespace Patterns.Api.CompositionRoot
                 typeof(CommandHandler<,>),
                 typeof(TransactionHandlerDecorator<,>), c => c.ImplementationType.Namespace.Contains("Commands")
                 );
+
+            container.RegisterDecorator(
+                typeof (CommandHandler<,>),
+                typeof (AuditTrailHandlerDecorator<,>),
+                d => d.ImplementationType.GetInterfaces().Contains(typeof(Auditable))
+                );
+
         }
 
         public static void ConfigureValidators(Container container)

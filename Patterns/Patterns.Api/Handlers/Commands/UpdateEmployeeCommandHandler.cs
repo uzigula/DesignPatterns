@@ -7,7 +7,7 @@ using Patterns.Api.Requests.Commands;
 
 namespace Patterns.Api.Handlers.Commands
 {
-    public class UpdateEmployeeCommandHandler : CommandHandler<UpdateEmployeeCommand>
+    public class UpdateEmployeeCommandHandler : CommandHandler<UpdateEmployeeCommand>, Auditable
     {
         private DataProvider<Employee> employeesProvider;
 

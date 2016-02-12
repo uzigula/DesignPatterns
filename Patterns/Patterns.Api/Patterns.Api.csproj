@@ -104,6 +104,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\Auditable.cs" />
+    <Compile Include="CrossCuttingConcerns\AuditTrailHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\TransactionHandlerDecorator.cs" />
     <Compile Include="Requests\Queries\GetAllEmployeesCommand.cs" />
     <Compile Include="Requests\Queries\GetEmployeeCommand.cs" />
